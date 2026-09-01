@@ -1,0 +1,10 @@
+İlk başta kevgir makinamızın indirmesini yapacağız bunun için canyoupwnme sitesinden kevgir e tıklıyoruz 
+
+   https://canyoupwn.me/posts/kevgir-vulnerable-vm/
+
+dowland diyerek drive üzerinden indiriyoruz yaklaşık 1,2GB lık bir dosya dosya indikten sonra istediğiniz VM den açabilrisiniz sonra başladıktan sonra username ve password soracaktır bunun için 
+
+  username --> user
+  password --> resu 
+
+yazarak giriş yapıyorsunuuz ve ifconfig yazraak eth0 ip adresinizi not ediyoruz
