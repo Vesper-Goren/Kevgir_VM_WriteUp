@@ -1,0 +1,26 @@
+Nessusu kurmak için ilk başta 
+
+https://www.tenable.com/products/nessus/nessus-essentials
+
+bu url adresine gidiyorsunuz ve karşınıza çıkan yerdeki bilgileri doldurarak kayıt oluyorsunuz 
+kayıt olduktan sonra karşınıza çıkan sayfada dowland diyip indirme sayfasına giriyorsunuz 
+
+sayfada dowland and  Install Nessus bölümünden işletim sisteminizi ayarlayıp dowlanda basıyorsunuz ve yaklaşık 72Mb lık bir dosay indirime başlyacak 
+
+dosya indikten sonra terminalde şu komutu çalıştırıyoruz 
+
+ dpkg -i <dosya_adı> 
+
+bu komutu yazdıktan sonra ; 
+
+/bin/systemctl start nessusd.service
+
+bu komutuda yazmamız lazım bunuda yazdıktan sonra sistemimiz başlayacaktır bundan sobnra tarayıcıda https://127.0.0.1:8834 adresine gidiyoruz 
+biraz kurlum süresi bekliyoruz 
+
+ondan sonra bize bir seçenek sunuyor nessus planları oradan nessus essential veya expert olanı seçiyoruz 
+
+bize bir kod veriyor ve offline decoder gibi bir siteye yönlendiriyor oraya server ile başlayan yere nessustaki kodu yapıştırıyoruz aktivasyon kodu ise kayıt olurken yazdığınız maile gelecek
+oraya o aktivasyon kodunu yazıyorsunuz ve size uzun bir lisasns keyi verecek onu kopyalayıp uzun bar kısmına yazıyorsunuz 
+
+ondan sonra sizden bir kullanıcı oluşturmanızı isteyecek oluşturup sisteme giriyorsunuz 
