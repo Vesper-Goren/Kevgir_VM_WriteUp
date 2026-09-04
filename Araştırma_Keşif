@@ -29,4 +29,18 @@
 46405/tcp open  ssh         Apache Mina sshd 0.8.0 (protocol 2.0)
 50873/tcp open  unknown
 
-böyle bir sonuç verdi şimdi nessus taraması yapacağız nessus kurulum adımlarını dosya eklerinden incelyebilrisiniz 
+böyle bir sonuç verdi şimdi nessus taraması yapacağız nessus kurulum adımlarını dosya eklerinden incelyebilrisiniz Nesus taramasında ;
+
+3 CRITICAL 
+2 HIGH
+4 MIXED
+1 LOW
+35 İNFO 
+
+sonucu aldık Krtitik seviyedeki zaafiyetler ubuntu linux , NFS , Redis  alanlarında kritik zaafiyetler olduğunu söylüyor 
+
+
+
+
+
+
