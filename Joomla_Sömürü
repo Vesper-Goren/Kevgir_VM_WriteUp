@@ -1,0 +1,25 @@
+şimdi joomla servisinin zaafiyet keşfini yapacağız ilk başta nmap <ip> -p 8081 yazarak açık olduğunu doğruluyorum 
+
+  PORT     STATE SERVICE
+  8081/tcp open  blackice-icec
+
+şimdi tarayıcıdan 8081 portuna gidiyoruz kaynak koda bakınca joomla 1.5 sürümünün çalıştığını görüyoruz bunun için internette araştırmaya başlıyoruz ilk olarak exploit-db 
+üzerinden araştırıyorum ve karşıma şöyle birşey geliyor 
+
+  Joomla! 1.5.x - 'Token' Remote Admin Change Password 
+
+en aşağıya gidince bir komut sırası görğyoruz ilk başta urlın sağına 
+
+  index.php?option=com_user&view=reset&layout=confirm
+
+bun yazıyoruz yazınca ekranda bir token barı geliyor bu token barına sadece bir ' işareti bırakıyoruz bu işaret bize burada SQL injection olduğunu gösteriyor
+açılan yeni sayfada yeni admin şifresi belirlememezi istiyor şifreyi belirleyince dirb aracı ile veya başka bir araç ile dizin taraması yapıp ;
+
+ administrator/
+
+dizinini bulammız gerekyior bu dizine gidip ;
+
+username --> admin
+password --> az önce koyduğumuz şifreyi 
+
+yazarak sistemin admin sayfasına giriş yapıyorum bundan sonra artık sitenin her türlü ayarlarıyla oynanabilir 
